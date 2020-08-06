@@ -11,7 +11,7 @@ function print_usage() {
 while [ $# -gt 0 ]; do
     case "$1" in
         -b|--build=*)
-            if [ "$1" = '-l' ]; then
+            if [ "$1" = '-b' ]; then
                 shift
                 BUILD="$1"
             else
