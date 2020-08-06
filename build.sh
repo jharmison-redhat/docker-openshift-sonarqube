@@ -114,6 +114,6 @@ case $BUILD in
         ;;
     *)
         print_usage >&2
-        exit 127
+        exit 126
         ;;
 esac
