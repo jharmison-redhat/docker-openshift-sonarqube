@@ -45,6 +45,7 @@ while [ $# -gt 0 ]; do
             break
             ;;
         *)
+            echo "Invalid option: $1" >&2
             print_usage >&2
             exit 127
             ;;
