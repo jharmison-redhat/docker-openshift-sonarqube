@@ -12,7 +12,7 @@ You can do something like the following, assuming you are in an existing OpenShi
 oc new-app postgresql-persistent \
 --param POSTGRESQL_USER=sonar --param POSTGRESQL_PASSWORD=sonar --param POSTGRESQL_DATABASE=sonar --param VOLUME_CAPACITY=4Gi -lapp=sonarqube_db
 
-oc new-app docker.io/wkulhanek/sonarqube:latest \
+oc new-app quay.io/redhatgov/sonarqube:latest \
 -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:postgresql://postgresql/sonar
 
 oc expose service sonarqube --port=9000
@@ -30,7 +30,7 @@ spec:
 oc set volume dc/sonarqube --add --overwrite --name=sonarqube-volume-1 --mount-path=/opt/sonarqube/data/ --type persistentVolumeClaim --claim-name=sonarqube-pvc
 ----
 
-This will result in your OpenShift environment deploying the included PostgreSQL database with persistent storage and then deploying the SonarQube image directly from DockerHub. It will also set up a PersistentVolumeClaim for SonarQube to store plugins and other data.
+This will result in your OpenShift environment deploying the included PostgreSQL database with persistent storage and then deploying the SonarQube image directly from Quay. It will also set up a PersistentVolumeClaim for SonarQube to store plugins and other data.
 
 ## Probes
 You should create Readiness and Liveness Probes for OpenShift to monitor the health of the SonarQube pod:
@@ -40,6 +40,3 @@ You should create Readiness and Liveness Probes for OpenShift to monitor the hea
 oc set probe dc/sonarqube --liveness --failure-threshold 3 --initial-delay-seconds 40 -- echo ok
 oc set probe dc/sonarqube --readiness --failure-threshold 3 --initial-delay-seconds 20 --get-url=http://:9000/about
 ----
-
-## ToDos
-* Write an OpenShift template

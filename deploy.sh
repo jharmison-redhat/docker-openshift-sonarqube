@@ -1,8 +1,8 @@
 #!/bin/bash
-oc new-project wk2-sonarqube
+oc new-project redhatgov-sonarqube
 oc new-app mysql-persistent -p MYSQL_DATABASE=sonar -p VOLUME_CAPACITY=4Gi -p MYSQL_USER=sonar -p MYSQL_PASSWORD=sonar
 sleep 12
-oc new-app wkulhanek/sonarqube:latest -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true\&characterEncoding=utf8\&rewriteBatchedStatements=true\&useConfigs=maxPerformance\&useSSL=false -lapp=sonarqube
+oc new-app quay.io/redhatgov/sonarqube:latest -e SONARQUBE_JDBC_USERNAME=sonar -e SONARQUBE_JDBC_PASSWORD=sonar -e SONARQUBE_JDBC_URL=jdbc:mysql://mysql:3306/sonar?useUnicode=true\&characterEncoding=utf8\&rewriteBatchedStatements=true\&useConfigs=maxPerformance\&useSSL=false -lapp=sonarqube
 
 oc expose service sonarqube
 oc rollout pause dc sonarqube

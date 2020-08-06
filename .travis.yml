@@ -1,0 +1,12 @@
+
+dist: bionic
+language: minimal
+services:
+  - docker
+script:
+  - ./build.sh -b local -d
+deploy:
+  provider: script
+  script: ./build.sh -b quay -d
+  on:
+    branch: master

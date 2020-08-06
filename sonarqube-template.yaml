@@ -11,7 +11,7 @@ objects:
     source:
       type: Git
       git:
-        uri: "https://github.com/wkulhanek/docker-openshift-sonarqube"
+        uri: "https://github.com/jharmison-redhat/docker-openshift-sonarqube"
     strategy:
       type: "Docker"
     output:
@@ -76,7 +76,7 @@ objects:
             value: "${POSTGRESQL_PASSWORD}"
           - name: POSTGRESQL_DATABASE
             value: "${POSTGRESQL_DATABASE}"
-          image: registry.access.redhat.com/rhscl/postgresql-95-rhel7@sha256:a0bfc4aa195737c802988f7c636073644d7a821061d801004277c98d776c9cbf
+          image: registry.redhat.io/rhel8/postgresql-10
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 3
@@ -293,9 +293,4 @@ parameters:
   displayName: PostgreSQL Database Name
   description: Name of the PostgreSQL database accessed.
   value: sonar
-  required: true
-- name: POSTGRESQL_VERSION
-  displayName: Version of PostgreSQL Image
-  description: Version of PostgreSQL image to be used (9.2, 9.4, 9.5 or latest).
-  value: '9.5'
   required: true
