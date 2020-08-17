@@ -1,6 +1,15 @@
 #!/bin/bash
 
-set -e
+function on_error() {
+  echo "Command on line $1 exited with code $2" >&2
+  ls -halF /opt/sonarqube >&2
+  stat /opt/sonarqube >&2
+  ls -halF /opt/sonarqube/data >&2
+  stat /opt/sonarqube/data >&2
+  exit $2
+}
+
+trap 'on_error $LINENO $?' ERR
 
 if [ "${1:0:1}" != '-' ]; then
   exec "$@"
