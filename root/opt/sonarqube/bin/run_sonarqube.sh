@@ -2,10 +2,19 @@
 
 function on_error() {
   echo "Command on line $1 exited with code $2" >&2
-  ls -halF /opt/sonarqube >&2
-  stat /opt/sonarqube >&2
-  ls -halF /opt/sonarqube/data >&2
-  stat /opt/sonarqube/data >&2
+  debug_commands=(
+    'ls -halF /opt/sonarqube'
+    'stat /opt/sonarqube'
+    'ls -halF /opt/sonarqube/data'
+    'stat /opt/sonarqube/data'
+    'echo $UID'
+    'echo $EUID'
+    'echo ${GROUPS[@]}'
+  )
+  for command in "${debug_commands[@]}"; do
+    echo "EXECUTING: $command" >&2
+    ${command[@]} | sed 's/^/  /' >&2
+  done
   exit $2
 }
 
